@@ -1,0 +1,30 @@
+class Solution(object):
+    def longestPalindrome(self, s):
+    # If the string has only one character or is empty, it's a palindrome
+     if len(s) <= 1:
+        return s
+
+     result = ""  # Store the longest palindrome found
+
+    # Function to expand around a center and return the palindrome
+     def expand(left, right):
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            left -= 1
+            right += 1
+        # Return the palindrome substring
+        return s[left+1:right]
+
+    # Check each character (and between characters) as the center
+     for i in range(len(s)):
+        # Odd length palindromes (like "aba")
+        pal1 = expand(i, i)
+        # Even length palindromes (like "abba")
+        pal2 = expand(i, i+1)
+
+        # Keep the longest one found so far
+        if len(pal1) > len(result):
+            result = pal1
+        if len(pal2) > len(result):
+            result = pal2
+
+     return result
